@@ -4,11 +4,30 @@ const mongoose = require("mongoose");
 const Product = mongoose.model("Product");
 
 exports.get = (req, res, next) => {
+	// Product.find({ title: "Mouse" })
 	Product.find(
 		{
 			active: true
 		},
 		"price title slug"
+	)
+		.then(data => {
+			res.status(200).send(data);
+		})
+		.catch(e => {
+			res.status(400).send(e);
+		});
+};
+
+exports.getBySlug = (req, res, next) => {
+	// É utilizado o método findOne para retornar somento o objeto sem [].
+	// Product.find(
+	Product.findOne(
+		{
+			slug: req.params.slug,
+			active: true
+		},
+		"title description slug tags"
 	)
 		.then(data => {
 			res.status(200).send(data);
