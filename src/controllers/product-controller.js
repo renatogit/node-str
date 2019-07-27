@@ -48,6 +48,22 @@ exports.getById = (req, res, next) => {
 		});
 };
 
+exports.getByTags = (req, res, next) => {
+	Product.find(
+		{
+			tags: req.params.tag,
+			active: true
+		},
+		"title description price slug 	tags"
+	)
+		.then(data => {
+			res.status(200).send(data);
+		})
+		.catch(e => {
+			res.status(400).send(e);
+		});
+};
+
 exports.post = (req, res, next) => {
 	var product = new Product(req.body);
 	product
