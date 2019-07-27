@@ -1042,3 +1042,23 @@ exports.put = (req, res, next) => {
 		});
 };
 ```
+
+#Aula XXII (Excluíndo um produto)
+
+Atualizando o método delete anterior.
+```js
+exports.delete = (req, res, next) => {
+	Product.findByIdAndRemove(req.body.id)
+		.then(x => {
+			res.status(200).send({
+				message: "Produto removido com sucesso!"
+			});
+		})
+		.catch(e => {
+			res.status(400).send({
+				message: "Falha ao remover o produto",
+				data: e
+			});
+		});
+};
+```

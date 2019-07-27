@@ -103,14 +103,19 @@ exports.post = (req, res, next) => {
 		});
 };
 
-// exports.put = (req, res, next) => {
-// 	const id = req.params.id;
-// 	res.status(200).send({
-// 		id,
-// 		item: req.body
-// 	});
-// };
+//
 
 exports.delete = (req, res, next) => {
-	res.status(200).send(req.body);
+	Product.findByIdAndRemove(req.body.id)
+		.then(x => {
+			res.status(200).send({
+				message: "Produto removido com sucesso!"
+			});
+		})
+		.catch(e => {
+			res.status(400).send({
+				message: "Falha ao remover o produto",
+				data: e
+			});
+		});
 };
