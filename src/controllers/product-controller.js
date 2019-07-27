@@ -3,15 +3,11 @@
 const mongoose = require("mongoose");
 const Product = mongoose.model("Product");
 const ValidationContract = require("../validators/fluent-validator");
+const repository = require("../product-repository/product-repository");
 
 exports.get = (req, res, next) => {
-	// Product.find({ title: "Mouse" })
-	Product.find(
-		{
-			active: true
-		},
-		"price title slug"
-	)
+	repository
+		.get()
 		.then(data => {
 			res.status(200).send(data);
 		})
@@ -21,15 +17,8 @@ exports.get = (req, res, next) => {
 };
 
 exports.getBySlug = (req, res, next) => {
-	// É utilizado o método findOne para retornar somento o objeto sem [].
-	// Product.find(
-	Product.findOne(
-		{
-			slug: req.params.slug,
-			active: true
-		},
-		"title description slug tags"
-	)
+	repository
+		.getBySlug(req.params.slug)
 		.then(data => {
 			res.status(200).send(data);
 		})
@@ -40,7 +29,8 @@ exports.getBySlug = (req, res, next) => {
 
 exports.getById = (req, res, next) => {
 	// Buscando por ID
-	Product.findById(req.params.id)
+	repository
+		.getById(req.params.id)
 		.then(data => {
 			res.status(200).send(data);
 		})
@@ -50,13 +40,8 @@ exports.getById = (req, res, next) => {
 };
 
 exports.getByTags = (req, res, next) => {
-	Product.find(
-		{
-			tags: req.params.tag,
-			active: true
-		},
-		"title description price slug 	tags"
-	)
+	repository
+		.getByTags(req.params.tag)
 		.then(data => {
 			res.status(200).send(data);
 		})
@@ -66,14 +51,8 @@ exports.getByTags = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-	Product.findByIdAndUpdate(req.params.id, {
-		$set: {
-			title: req.body.title,
-			description: req.body.description,
-			price: req.body.price,
-			slug: req.body.slug
-		}
-	})
+	repository
+		.update(req.params.id, res.body)
 		.then(x => {
 			res.status(200).send({
 				message: "Produto atualizado com sucesso!"
@@ -114,9 +93,8 @@ exports.post = (req, res, next) => {
 		return;
 	}
 
-	var product = new Product(req.body);
-	product
-		.save()
+	repository
+		.create(req.body)
 		.then(x => {
 			res.status(201).send({
 				message: "Produto cadastrado com sucesso!"
@@ -131,7 +109,8 @@ exports.post = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-	Product.findByIdAndRemove(req.body.id)
+	repository
+		.delete(req.params.id)
 		.then(x => {
 			res.status(200).send({
 				message: "Produto removido com sucesso!"
