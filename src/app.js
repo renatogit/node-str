@@ -12,6 +12,7 @@ mongoose.connect("mongodb://localhost/admin", { useNewUrlParser: true });
 
 // Carrega os Models
 const Product = require("./models/product");
+const Product = require("./models/custumers");
 
 // Carrega as Rotas
 const indexRoute = require("./routes/index-route");
