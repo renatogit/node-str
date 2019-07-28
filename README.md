@@ -1547,7 +1547,7 @@ exports.delete = async id => {
 };
 ```
 
-# Aula XXVI (Revisando so models Customers)
+# Aula XXVI (Revisando os models Customers)
 
 ```js
 // modells/custumers.js
