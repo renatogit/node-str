@@ -9,8 +9,8 @@ exports.get = async (req, res, next) => {
 	// Add async await && try catch
 	try {
 		var data = await repository.get();
-		res.status(200).send(data);
 		if (req.session.user) return next();
+		res.status(200).send(data);
 		return next(new NotAuthorizedError());
 	} catch (e) {
 		res.status(500).send({

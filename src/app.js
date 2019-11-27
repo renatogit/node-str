@@ -25,6 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
-app.use('/products', propductRoute);
+app.use('/products', propductRoute, findApp, renderView, sendJSON);
 
 module.exports = app;
