@@ -10,6 +10,8 @@ exports.get = async (req, res, next) => {
 	try {
 		var data = await repository.get();
 		res.status(200).send(data);
+		if (req.session.user) return next();
+		return next(new NotAuthorizedError());
 	} catch (e) {
 		res.status(500).send({
 			message: 'Falha ao procesar sua requisição',
