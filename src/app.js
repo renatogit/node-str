@@ -3,6 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var methodOverride = require('method-override');
 
 const app = express();
 const router = express.Router();
@@ -21,8 +22,9 @@ const Product = require('./models/product');
 const indexRoute = require('./routes/index-route');
 const propductRoute = require('./routes/product-route');
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride());
 
 app.use('/', indexRoute);
 app.use('/products', propductRoute);
