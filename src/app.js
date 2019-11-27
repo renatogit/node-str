@@ -10,7 +10,7 @@ const router = express.Router();
 // Conecta ao banco
 mongoose.connect(
 	'mongodb+srv://devilla:root@defaultcluster-ae3cx.mongodb.net/test?retryWrites=true&w=majority',
-	{ useUnifiedTopology: true },
+	{ useNewUrlParser: true },
 );
 
 // Carrega os Models
@@ -25,6 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
-app.use('/products', propductRoute, findApp, renderView, sendJSON);
+app.use('/products', propductRoute);
 
 module.exports = app;
